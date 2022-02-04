@@ -1,32 +1,21 @@
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
 using RoleBot.Infrastructure.Entities;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
 namespace RoleBot.Infrastructure.Repositories;
 
-public class CategoryRepository : ICategoryRepository, IDisposable
+public class CategoryRepository : ICategoryRepository
 {
-    private RoleBotDbContext _context;
+    private readonly RoleBotDbContext _context;
 
     public CategoryRepository(RoleBotDbContext context)
     {
         this._context = context;
     }
 
-    public IEnumerable<Category> GetCategories(string guildId)
+    public Task<List<Category>> GetCategories(string guildId)
     {
-        return new[]
-        {
-            new Category()
-            {
-                id = 2,
-                description = "Billy BOB",
-                name = "Bobs Shop",
-                guildId = "647960154079232041",
-                mutuallyExclusive = true
-            }
-        };
+        return _context.Set<Category>().Where(c => c.guildId == guildId).ToListAsync();
     }
 
     public async Task<Category?> GetCategoryById(long categoryId)
@@ -49,11 +38,11 @@ public class CategoryRepository : ICategoryRepository, IDisposable
         _context.SaveChanges();
     }
 
-    private bool disposed = false;
+    private bool _disposed = false;
     
     protected virtual void Dispose(bool disposing)
     {
-        if (!this.disposed)
+        if (!this._disposed)
         {
             if (disposing)
             {
@@ -61,7 +50,7 @@ public class CategoryRepository : ICategoryRepository, IDisposable
             }
         }
 
-        this.disposed = true;
+        this._disposed = true;
     }
 
     public void Dispose()

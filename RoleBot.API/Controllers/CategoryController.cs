@@ -18,6 +18,19 @@ public class CategoryController : ControllerBase
     {
         var result = await _categoryService.GetCategory(categoryId);
 
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetGuildCategories(string guildId)
+    {
+        var result = await _categoryService.GetGuildCategories(guildId);
+
         return Ok(result);
     }
 }

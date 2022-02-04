@@ -17,4 +17,9 @@ internal class CategoryService: ICategoryService
     {
         return await _categoryRepository.GetCategoryById(categoryId);
     }
+
+    public async Task<List<Category>> GetGuildCategories(string guildId)
+    {
+        return await _categoryRepository.GetCategories(guildId);
+    }
 }
