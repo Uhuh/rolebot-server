@@ -10,7 +10,6 @@ public class RoleBotDbContext : DbContext
   public RoleBotDbContext(IConfiguration config, DbContextOptions<RoleBotDbContext> options) : base(options)
   {
     this._config = config;
-    Console.WriteLine("CREATED DBCONTEXT");
   }
   
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
