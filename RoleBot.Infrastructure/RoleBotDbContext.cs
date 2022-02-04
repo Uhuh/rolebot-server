@@ -15,8 +15,7 @@ public class RoleBotDbContext : DbContext
   
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    Console.WriteLine("Inside DBCONTEXT FOR PG");
-    optionsBuilder.UseNpgsql(_config.GetConnectionString("DefaultConnection"));
+    optionsBuilder.UseNpgsql("Host=192.168.50.36;Database=rolebotBeta;Username=panku;Password=panku");
 
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)

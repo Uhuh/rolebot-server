@@ -3,18 +3,18 @@ namespace RoleBot.Infrastructure.Entities;
 
 public class Category : IEntity
 {
-  public long Id { get; set; }
+  public long id { get; set; }
 
   [Required]
-  public string GuildId { get; set; }
+  public string guildId { get; set; }
 
   [Required]
   [MaxLength(64)]
-  public string Name { get; set; }
+  public string name { get; set; }
 
   [MaxLength(500)]
-  public string? Description { get; set; }
+  public string? description { get; set; }
 
   [Required]
-  public bool MutuallyExclusive { get; set; }
+  public bool mutuallyExclusive { get; set; }
 }

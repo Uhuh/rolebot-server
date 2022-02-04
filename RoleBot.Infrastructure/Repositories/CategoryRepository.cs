@@ -20,25 +20,18 @@ public class CategoryRepository : ICategoryRepository, IDisposable
         {
             new Category()
             {
-                Id = 2,
-                Description = "Billy BOB",
-                Name = "Bobs Shop",
-                GuildId = "647960154079232041",
-                MutuallyExclusive = true
+                id = 2,
+                description = "Billy BOB",
+                name = "Bobs Shop",
+                guildId = "647960154079232041",
+                mutuallyExclusive = true
             }
         };
     }
 
     public async Task<Category?> GetCategoryById(long categoryId)
     {
-        return new Category
-        {
-            Description = "DSADAS",
-            Id = 17,
-            Name = "DSADDDDDDDDDDDDDDDDDDDD",
-            GuildId = "123",
-            MutuallyExclusive = false
-        };
+        return await _context.Set<Category>().Where(c => c.id == categoryId).FirstOrDefaultAsync();
     }
 
     public void InsertCategory(Category category)
