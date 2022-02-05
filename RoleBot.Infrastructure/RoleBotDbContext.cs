@@ -22,5 +22,6 @@ public class RoleBotDbContext : DbContext
     base.OnModelCreating(modelBuilder);
 
     modelBuilder.Entity<Category>().ToTable("category");
+    modelBuilder.Entity<ReactRole>().ToTable("react_role");
   }
 }

@@ -13,6 +13,8 @@ public static class StartupExtensions
   {
     services.AddDbContext<RoleBotDbContext>();
 
+    // Add our services so that we can DI later.
+    services.AddScoped<IJwtService, JwtService>();
     services.AddScoped<ICategoryRepository, CategoryRepository>();
     services.AddScoped<ICategoryService, CategoryService>();
   }

@@ -15,12 +15,12 @@ public class CategoryRepository : ICategoryRepository
 
     public Task<List<Category>> GetCategories(string guildId)
     {
-        return _context.Set<Category>().Where(c => c.guildId == guildId).ToListAsync();
+        return _context.Set<Category>().Where(c => c.guildId == guildId).Include(c => c.reactRoles).ToListAsync();
     }
 
     public async Task<Category?> GetCategoryById(long categoryId)
     {
-        return await _context.Set<Category>().Where(c => c.id == categoryId).FirstOrDefaultAsync();
+        return await _context.Set<Category>().Where(c => c.id == categoryId).Include(c => c.reactRoles).FirstOrDefaultAsync();
     }
 
     public void InsertCategory(Category category)
