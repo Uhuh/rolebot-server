@@ -13,7 +13,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.SetupInfrastructureServices();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton(new AuthData(
@@ -26,6 +25,9 @@ builder.Services.AddSingleton(new AuthData(
 
 builder.Services.AddRefitClient<IDiscordApi>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://discordapp.com/api"));
+
+builder.Services.SetupInfrastructureServices();
+builder.Services.SetupJwt(builder.Configuration);
 
 var app = builder.Build();
 
