@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json.Nodes;
 
 namespace RoleBot.Infrastructure.Services.Interfaces;
 
@@ -11,6 +12,7 @@ public enum TokenType
 
 public interface IJwtService
 {
-    public Task<JwtSecurityToken?> GenerateAuthToken(string userId);
+    public JwtSecurityToken? GenerateAuthToken(string accessToken, string userJsonString, string userGuildJsonString);
     public bool VerifyAuthToken(TokenType tokenType, string tokenString);
+    public void AppendTokenCookie(IResponseCookies cookies, JwtSecurityToken token);
 }
