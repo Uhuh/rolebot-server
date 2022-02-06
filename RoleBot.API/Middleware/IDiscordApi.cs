@@ -13,4 +13,7 @@ public interface IDiscordApi
 
     [Get("/users/@me")]
     Task<string> GetUser([Authorize] string authorization);
+
+    [Get("/users/@me/guilds")]
+    Task<string> GetUserGuilds([Authorize] string authorization);
 }
