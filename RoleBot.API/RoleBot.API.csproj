@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Refit" Version="6.2.16" />
     <PackageReference Include="Refit.HttpClientFactory" Version="6.2.16" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
