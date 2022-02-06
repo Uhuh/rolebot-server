@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services;
@@ -12,10 +13,37 @@ public static class StartupExtensions
   public static void SetupInfrastructureServices(this IServiceCollection services)
   {
     services.AddDbContext<RoleBotDbContext>();
-
+    
     // Add our services so that we can DI later.
     services.AddScoped<IJwtService, JwtService>();
     services.AddScoped<ICategoryRepository, CategoryRepository>();
     services.AddScoped<ICategoryService, CategoryService>();
+  }
+
+  public static void SetupJwt(this IServiceCollection services, IConfiguration configuration)
+  {
+    var jwtConfig = configuration.GetSection("JwtAuth");
+    var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig["IssuerSigningKey"]));
+    var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+    var config = IssuerConfig(jwtConfig, signingKey, credentials);
+
+    services.AddSingleton(config);
+  }
+
+  private static JwtConfig IssuerConfig(IConfiguration configuration, SecurityKey signingKey, SigningCredentials credentials)
+  {
+    var validationParams = new TokenValidationParameters
+    {
+      ValidateIssuer = true,
+      ValidateAudience = true,
+      ValidateLifetime = true,
+      ValidateIssuerSigningKey = true,
+      ValidIssuer = configuration["ValidIssuer"],
+      ValidAudience = configuration["ValidAudience"],
+      IssuerSigningKey = signingKey
+    };
+
+    return new ( configuration["ValidAudience"], configuration["ValidIssuer"], credentials, validationParams, TimeSpan.FromDays(7));
   }
 }
