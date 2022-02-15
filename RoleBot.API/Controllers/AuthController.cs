@@ -1,7 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using RoleBot.API.Middleware;
 using RoleBot.API.Models;
 using RoleBot.Infrastructure.Services.Interfaces;
@@ -10,18 +9,19 @@ namespace RoleBot.API.Controllers;
 
 [Route("/api/[controller]/[action]")]
 [ApiController]
-public class SignInController : ControllerBase
+public class AuthController : ControllerBase
 {
     private readonly IDiscordApi _api;
     private readonly IJwtService _jwtService;
     private readonly AuthData _authData;
-    public SignInController(IDiscordApi api, AuthData authData, IJwtService jwtService)
+    public AuthController(IDiscordApi api, AuthData authData, IJwtService jwtService)
     {
         _api = api;
         _authData = authData;
         _jwtService = jwtService;
     }
     
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> Auth(string code)
     {
@@ -51,18 +51,10 @@ public class SignInController : ControllerBase
             }
             
             _jwtService.AppendTokenCookie(Response.Cookies, token);
-            
-            var user = JsonConvert.DeserializeObject(userJsonString);
-            var guilds = JsonConvert.DeserializeObject(userGuildJsonString);
 
-            var serializedJson = JsonConvert.SerializeObject(new
-            {
-                user, guilds
-            });
-
-            return Ok(JsonObject.Parse(serializedJson));
+            return Ok();
         }
-        catch
+        catch (Exception e)
         {
             return Unauthorized();
         }
