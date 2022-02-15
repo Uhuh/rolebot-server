@@ -18,7 +18,7 @@ internal class JwtMiddleware
 
         if (token != null)
         {
-            jwtService.VerifyAuthToken(TokenType.Auth, token);
+            jwtService.VerifyAuthToken(ctx, token);
         }
         
         return _next(ctx);
