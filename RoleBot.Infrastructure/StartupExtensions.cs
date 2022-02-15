@@ -1,4 +1,5 @@
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories;
@@ -28,6 +29,15 @@ public static class StartupExtensions
 
     var config = IssuerConfig(jwtConfig, signingKey, credentials);
 
+    services.AddAuthentication(option =>
+    {
+      option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+      option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options =>
+    {
+      options.TokenValidationParameters = config.TokenValidationParameters;
+    });
+      
     services.AddSingleton(config);
   }
 
@@ -39,11 +49,11 @@ public static class StartupExtensions
       ValidateAudience = true,
       ValidateLifetime = true,
       ValidateIssuerSigningKey = true,
-      ValidIssuer = configuration["ValidIssuer"],
-      ValidAudience = configuration["ValidAudience"],
+      ValidIssuer = configuration["Issuer"],
+      ValidAudience = configuration["Audience"],
       IssuerSigningKey = signingKey
     };
 
-    return new ( configuration["ValidAudience"], configuration["ValidIssuer"], credentials, validationParams, TimeSpan.FromDays(7));
+    return new ( configuration["Issuer"], configuration["Audience"], credentials, validationParams, TimeSpan.FromDays(7));
   }
 }
