@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RoleBot.API.Middleware;
 using RoleBot.Infrastructure.Services.Interfaces;
 namespace RoleBot.API.Controllers;
 
@@ -26,6 +28,7 @@ public class CategoryController : ControllerBase
         return Ok(result);
     }
 
+    [JwtAuthorize]
     [HttpGet]
     public async Task<IActionResult> GetGuildCategories(string guildId)
     {
