@@ -20,7 +20,7 @@ public class JwtService : IJwtService
         _jwtConfig = jwtConfig;
     }
     
-    public JwtSecurityToken? GenerateAuthToken(string accessTokenJson, string userJsonString, string userGuildJsonString)
+    public string? GenerateAuthToken(string accessTokenJson, string userJsonString, string userGuildJsonString)
     {
         var guilds = JsonConvert.DeserializeObject<List<Guild>>(userGuildJsonString);
 
@@ -48,7 +48,8 @@ public class JwtService : IJwtService
             _jwtConfig.SigningCredentials
         );
 
-        return token;
+        // Generate the JWT token string to return all the way up.
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
     public void VerifyAuthToken(HttpContext context, string token)
     {

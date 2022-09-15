@@ -12,7 +12,7 @@ public enum TokenType
 
 public interface IJwtService
 {
-    public JwtSecurityToken? GenerateAuthToken(string accessToken, string userJsonString, string userGuildJsonString);
+    public string? GenerateAuthToken(string accessToken, string userJsonString, string userGuildJsonString);
     public void VerifyAuthToken(HttpContext context, string token);
     public void AppendTokenCookie(IResponseCookies cookies, JwtSecurityToken token);
 }

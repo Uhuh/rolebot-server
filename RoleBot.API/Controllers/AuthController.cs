@@ -50,9 +50,7 @@ public class AuthController : ControllerBase
                 return Unauthorized();
             }
             
-            _jwtService.AppendTokenCookie(Response.Cookies, token);
-
-            return Ok();
+            return Ok(token);
         }
         catch (Exception e)
         {
