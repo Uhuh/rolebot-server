@@ -14,7 +14,7 @@ public class RoleBotDbContext : DbContext
   
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    optionsBuilder.UseNpgsql("Host=192.168.50.36;Database=rolebotBeta;Username=panku;Password=panku");
+    optionsBuilder.UseNpgsql("Host=192.168.50.36;Database=rolebotTest;Username=panku;Password=panku");
 
   }
   protected override void OnModelCreating(ModelBuilder modelBuilder)
