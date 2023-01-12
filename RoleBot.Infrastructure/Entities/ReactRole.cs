@@ -26,4 +26,7 @@ public class ReactRole : IEntity
     public long? categoryId { get; set; }
     [JsonIgnore]
     public Category? category { get; set; }
+
+    [required] 
+    public button type {get; set;}
 }
