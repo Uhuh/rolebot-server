@@ -1,22 +1,29 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace RoleBot.Infrastructure.Entities;
 
 public class Category : IEntity
 {
-    public long id { get; set; }
+    [Column("id")]
+    public long Id { get; set; }
 
     [Required]
-    public string guildId { get; set; }
+    [Column("guildId")]
+    public string GuildId { get; set; }
 
     [Required]
     [MaxLength(64)]
-    public string name { get; set; }
+    [Column("name")]
+    public string Name { get; set; }
 
     [MaxLength(500)]
-    public string? description { get; set; }
+    [Column("description")]
+    public string? Description { get; set; }
 
     [Required]
-    public bool mutuallyExclusive { get; set; }
+    [Column("mutuallyExclusive")]
+    public bool MutuallyExclusive { get; set; }
     
-    public ICollection<ReactRole> reactRoles { get; set; }
+    public ICollection<ReactRole> ReactRoles { get; set; }
 }
