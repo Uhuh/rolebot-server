@@ -18,7 +18,12 @@ public static class StartupExtensions
     // Add our services so that we can DI later.
     services.AddScoped<IJwtService, JwtService>();
     services.AddScoped<ICategoryRepository, CategoryRepository>();
+    services.AddScoped<IConfigRepository, ConfigRepository>();
+    services.AddScoped<IRoleRepository, RoleRepository>();
+    
     services.AddScoped<ICategoryService, CategoryService>();
+    services.AddScoped<IConfigService, ConfigService>();
+    services.AddScoped<IRoleService, RoleService>();
   }
 
   public static void SetupJwt(this IServiceCollection services, IConfiguration configuration)
