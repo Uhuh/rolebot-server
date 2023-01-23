@@ -17,7 +17,7 @@ public class RoleBotDbContext : DbContext
   static RoleBotDbContext() {
     NpgsqlConnection.GlobalTypeMapper
       .MapEnum<GuildReactType>()
-      .MapEnum<DisplayType>();
+      .MapEnum<DisplayOrder>();
   }
   
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,10 +30,9 @@ public class RoleBotDbContext : DbContext
 
     modelBuilder
       .HasPostgresEnum<GuildReactType>()
-      .HasPostgresEnum<DisplayType>();
+      .HasPostgresEnum<DisplayOrder>();
 
     modelBuilder.Entity<Category>().ToTable("category");
-    modelBuilder.Entity<ReactRole>().ToTable("react_role");
     modelBuilder.Entity<GuildConfig>().ToTable("guild_config")
       .HasKey(g => new { g.GuildId });
   }
