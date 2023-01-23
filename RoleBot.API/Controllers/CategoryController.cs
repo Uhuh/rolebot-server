@@ -16,6 +16,7 @@ public class CategoryController : ControllerBase
         _categoryService = categoryService;
     }
 
+    [JwtAuthorize]
     [HttpGet]
     [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -29,6 +30,16 @@ public class CategoryController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+    [JwtAuthorize]
+    [HttpPost]
+    [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Update([FromBody] CategoryDto category)
+    {
+        var result = await _categoryService.UpdateCategory(CategoryDto.To(category));
+
+        return Ok(result ?? null);
     }
 
     [JwtAuthorize]

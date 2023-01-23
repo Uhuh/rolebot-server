@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
 namespace RoleBot.Infrastructure.Repositories;
@@ -17,7 +18,6 @@ public class CategoryRepository : ICategoryRepository
     {
         return _context.Set<Category>()
             .Where(c => c.GuildId == guildId)
-            .Include(c => c.ReactRoles)
             .ToListAsync();
     }
 
@@ -25,11 +25,28 @@ public class CategoryRepository : ICategoryRepository
     {
         return await _context.Set<Category>()
             .Where(c => c.Id == categoryId)
-            .Include(c => c.ReactRoles)
             .FirstOrDefaultAsync();
     }
 
-    public void InsertCategory(Category category)
+    public async Task<CategoryDto?> UpdateCategory(CategoryDto category)
+    {
+        var result = await _context.Set<Category>()
+            .Where(c => c.Id == category.Id).FirstOrDefaultAsync();
+
+        if (result == null)
+            return null;
+            
+        result.Name = category.Name;
+        result.Description = category.Description;
+        result.MutuallyExclusive = category.MutuallyExclusive;
+        result.DisplayOrder = category.DisplayOrder;
+
+        await _context.SaveChangesAsync();
+
+        return CategoryDto.From(result);
+    }
+
+    public void InsertCategory(CategoryDto category)
     {
         throw new NotImplementedException();
     }

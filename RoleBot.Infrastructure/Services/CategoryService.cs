@@ -1,4 +1,5 @@
 using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services.Interfaces;
 
@@ -21,5 +22,10 @@ internal class CategoryService: ICategoryService
     public async Task<List<Category>> GetGuildCategories(string guildId)
     {
         return await _repository.GetCategories(guildId);
+    }
+
+    public async Task<CategoryDto?> UpdateCategory(CategoryDto category)
+    {
+        return await _repository.UpdateCategory(category);
     }
 }
