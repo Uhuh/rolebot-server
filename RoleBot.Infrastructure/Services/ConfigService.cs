@@ -1,4 +1,4 @@
-using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services.Interfaces;
 
@@ -13,8 +13,13 @@ internal class ConfigService : IConfigService
         _repository = repository;
     }
     
-    public Task<GuildConfig?> GetConfig(string guildId)
+    public Task<ConfigDto?> GetConfig(string guildId)
     {
         return _repository.GetConfig(guildId);
+    }
+
+    public Task<ConfigDto> UpdateConfig(ConfigDto updatedConfig)
+    {
+        return _repository.UpdateConfig(updatedConfig);
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Models;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
 namespace RoleBot.Infrastructure.Repositories;
@@ -13,9 +14,27 @@ public class ConfigRepository : IConfigRepository
         _context = context;
     }
     
-    public Task<GuildConfig?> GetConfig(string guildId)
+    public async Task<ConfigDto?> GetConfig(string guildId)
     {
-        return _context.Set<GuildConfig>().Where(c => c.GuildId == guildId).FirstOrDefaultAsync();
+        var config = await _context.Set<GuildConfig>().Where(c => c.GuildId == guildId).FirstOrDefaultAsync();
+
+        return config == null ? null : ConfigDto.From(config);
+    }
+
+    public async Task<ConfigDto> UpdateConfig(ConfigDto updatedConfig)
+    {
+        var config = await _context.Set<GuildConfig>().Where(c => c.GuildId == updatedConfig.GuildId)
+            .FirstOrDefaultAsync();
+
+        if (config == null)
+            return null;
+
+        config.ReactType = updatedConfig.ReactType;
+        config.HideEmojis = updatedConfig.HideEmojis;
+
+        await _context.SaveChangesAsync();
+
+        return ConfigDto.From(config);
     }
     
     public void Save()
