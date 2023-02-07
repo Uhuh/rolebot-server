@@ -1,8 +1,8 @@
-using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Dtos;
 
 namespace RoleBot.Infrastructure.Services.Interfaces;
 
 public interface IRoleService
 {
-    public Task<List<ReactRole>?> GetGuildRoles(string guildId);
+    public Task<List<ReactRoleDto>> GetGuildRoles(string guildId);
 }

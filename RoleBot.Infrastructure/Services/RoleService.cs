@@ -1,4 +1,4 @@
-using RoleBot.Infrastructure.Entities;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services.Interfaces;
 
@@ -12,8 +12,8 @@ internal class RoleService : IRoleService
     {
         _repository = repository;
     }
-    public Task<List<ReactRole>?> GetGuildRoles(string reactRoleId)
+    public Task<List<ReactRoleDto>> GetGuildRoles(string guildId)
     {
-        return null;
+        return _repository.GetGuildRoles(guildId);
     }
 }

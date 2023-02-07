@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Entities;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
@@ -13,9 +14,11 @@ public class RoleRepository : IRoleRepository
         _context = context;
     }
 
-    public Task<List<ReactRole>> GetGuildRoles(string guildId)
+    public Task<List<ReactRoleDto>> GetGuildRoles(string guildId)
     {
-        return _context.Set<ReactRole>().Where(r => r.GuildId == guildId).ToListAsync();
+        return _context.Set<ReactRole>().Where(r => r.GuildId == guildId)
+            .Select(r => ReactRoleDto.From(r))
+            .ToListAsync();
     }
     
     public void Save()
