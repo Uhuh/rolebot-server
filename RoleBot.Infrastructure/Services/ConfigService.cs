@@ -1,4 +1,4 @@
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services.Interfaces;
 

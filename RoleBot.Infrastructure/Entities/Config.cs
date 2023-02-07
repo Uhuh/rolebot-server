@@ -7,7 +7,7 @@ namespace RoleBot.Infrastructure.Entities;
 public class GuildConfig : IEntity
 {
     [Column("id")]
-    public long Id { get; }
+    public long Id { get; set; }
     
     [Required]
     [Column("guildId")]

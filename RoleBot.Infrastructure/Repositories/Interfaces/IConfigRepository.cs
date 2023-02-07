@@ -1,5 +1,5 @@
 using RoleBot.Infrastructure.Entities;
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 
 namespace RoleBot.Infrastructure.Repositories.Interfaces;
 

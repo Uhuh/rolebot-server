@@ -1,4 +1,4 @@
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 
 namespace RoleBot.Infrastructure.Services.Interfaces;
 

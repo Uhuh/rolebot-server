@@ -1,5 +1,5 @@
 namespace Rolebot.API.Dtos;
-using ConfigInfraDto = RoleBot.Infrastructure.Models.ConfigDto;
+using ConfigInfraDto = RoleBot.Infrastructure.Dtos.ConfigDto;
 using ReactTypeInfra = RoleBot.Infrastructure.Enums.GuildReactType;
 
 public enum GuildReactType

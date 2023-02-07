@@ -1,7 +1,7 @@
 using RoleBot.Infrastructure.Entities;
 using RoleBot.Infrastructure.Enums;
 
-namespace RoleBot.Infrastructure.Models;
+namespace RoleBot.Infrastructure.Dtos;
 
 public record ConfigDto(
     long Id,

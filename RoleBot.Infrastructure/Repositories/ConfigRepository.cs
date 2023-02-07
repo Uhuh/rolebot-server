@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RoleBot.Infrastructure.Entities;
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
 namespace RoleBot.Infrastructure.Repositories;
