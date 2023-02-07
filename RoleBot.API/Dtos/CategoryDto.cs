@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using DisplayOrderInfra = RoleBot.Infrastructure.Enums.DisplayOrder;
+using CategoryDtoInfra = RoleBot.Infrastructure.Dtos.CategoryDto;
 namespace Rolebot.API.Dtos;
 
 public enum DisplayType
@@ -21,7 +22,7 @@ public record CategoryDto(
   DisplayType DisplayOrder
 )
 {
-  public static DisplayOrderInfra DisplayTo(DisplayType type) =>
+  public static DisplayOrderInfra To(DisplayType type) =>
     type switch
     {
       DisplayType.Alpha => DisplayOrderInfra.Alpha,
@@ -30,6 +31,19 @@ public record CategoryDto(
       DisplayType.ReversedTime => DisplayOrderInfra.ReversedTime,
       _ => DisplayOrderInfra.Alpha
     };
-  public static RoleBot.Infrastructure.Models.CategoryDto To(CategoryDto dto) => new(dto.Id, dto.GuildId, dto.Name, dto.Description, dto.MutuallyExclusive,
-    dto.RequiredRoleId, dto.ExcludedRoleId, DisplayTo(dto.DisplayOrder));
+  
+  public static DisplayType From(DisplayOrderInfra type) =>
+    type switch
+    {
+      DisplayOrderInfra.Alpha => DisplayType.Alpha,
+      DisplayOrderInfra.ReversedAlpha => DisplayType.ReversedAlpha,
+      DisplayOrderInfra.Time => DisplayType.Time,
+      DisplayOrderInfra.ReversedTime => DisplayType.ReversedTime,
+      _ => DisplayType.Alpha
+    };
+  public static CategoryDtoInfra To(CategoryDto dto) => new(dto.Id, dto.GuildId, dto.Name, dto.Description, dto.MutuallyExclusive,
+    dto.RequiredRoleId, dto.ExcludedRoleId, To(dto.DisplayOrder));
+  
+  public static CategoryDto From(CategoryDtoInfra dto) => new(dto.Id, dto.GuildId, dto.Name, dto.Description, dto.MutuallyExclusive,
+    dto.RequiredRoleId, dto.ExcludedRoleId, From(dto.DisplayOrder));
 }

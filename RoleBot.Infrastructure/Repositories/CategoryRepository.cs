@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RoleBot.Infrastructure.Entities;
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 
 namespace RoleBot.Infrastructure.Repositories;
@@ -14,18 +14,41 @@ public class CategoryRepository : ICategoryRepository
         this._context = context;
     }
 
-    public Task<List<Category>> GetCategories(string guildId)
+    public Task<List<CategoryDto>> GetCategories(string guildId)
     {
         return _context.Set<Category>()
             .Where(c => c.GuildId == guildId)
+            .Select(c => CategoryDto.From(c))
             .ToListAsync();
     }
 
-    public async Task<Category?> GetCategoryById(long categoryId)
+    public Task<CategoryDto?> GetCategoryById(long categoryId)
     {
-        return await _context.Set<Category>()
+        return _context.Set<Category>()
             .Where(c => c.Id == categoryId)
+            .Select(c => CategoryDto.From(c))
             .FirstOrDefaultAsync();
+    }
+
+    public async Task<CategoryDto> CreateCategory(CategoryDto category)
+    {
+        var newCategory = new Category
+        {
+            DisplayOrder = category.DisplayOrder,
+            GuildId = category.GuildId,
+            Description = category.Description,
+            MutuallyExclusive = category.MutuallyExclusive,
+            Name = category.Name,
+            ExcludedRoleId = category.ExcludedRoleId,
+            RequiredRoleId = category.RequiredRoleId,
+        };
+
+
+        await _context.Set<Category>().AddAsync(newCategory);
+
+        await _context.SaveChangesAsync();
+
+        return CategoryDto.From(newCategory);
     }
 
     public async Task<CategoryDto?> UpdateCategory(CategoryDto category)
@@ -45,13 +68,21 @@ public class CategoryRepository : ICategoryRepository
 
         return CategoryDto.From(result);
     }
-
-    public void InsertCategory(CategoryDto category)
+    
+    public async Task<CategoryDto?> DeleteCategory(string guildId, long categoryId)
     {
-        throw new NotImplementedException();
+        var result = await _context.Set<Category>().Where(c => c.Id == categoryId && c.GuildId == guildId).FirstOrDefaultAsync();
+
+        if (result == null)
+            return null;
+
+        _context.Remove(result);
+        await _context.SaveChangesAsync();
+
+        return CategoryDto.From(result);
     }
 
-    public void DeleteCategory(long categoryId)
+    public void InsertCategory(CategoryDto category)
     {
         throw new NotImplementedException();
     }

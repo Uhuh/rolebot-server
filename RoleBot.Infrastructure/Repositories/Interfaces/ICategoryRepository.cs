@@ -1,14 +1,14 @@
-using RoleBot.Infrastructure.Entities;
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 
 namespace RoleBot.Infrastructure.Repositories.Interfaces;
 
 public interface ICategoryRepository : IDisposable
 {
-    public Task<List<Category>> GetCategories(string guildId);
-    public Task<Category?> GetCategoryById(long categoryId);
+    public Task<List<CategoryDto>> GetCategories(string guildId);
+    public Task<CategoryDto?> GetCategoryById(long categoryId);
+    public Task<CategoryDto> CreateCategory(CategoryDto category);
     public Task<CategoryDto?> UpdateCategory(CategoryDto category);
     public void InsertCategory(CategoryDto category);
-    public void DeleteCategory(long categoryId);
+    public Task<CategoryDto?> DeleteCategory(string guildId, long categoryId);
     public void Save();
 }

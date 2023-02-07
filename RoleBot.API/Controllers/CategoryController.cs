@@ -33,15 +33,35 @@ public class CategoryController : ControllerBase
     }
 
     [JwtAuthorize]
+    [HttpPut]
+    [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Create([FromBody] CategoryDto category)
+    {
+        var result = await _categoryService.CreateCategory(CategoryDto.To(category));
+
+        return Ok(result);
+    }
+
+    [JwtAuthorize]
     [HttpPost]
     [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update([FromBody] CategoryDto category)
     {
         var result = await _categoryService.UpdateCategory(CategoryDto.To(category));
 
-        return Ok(result ?? null);
+        return result == null ? null : Ok(CategoryDto.From(result));
     }
 
+    [JwtAuthorize]
+    [HttpDelete]
+    [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Delete(string guildId, long categoryId)
+    {
+        var result = await _categoryService.DeleteCategory(guildId, categoryId);
+
+        return Ok(result);
+    }
+    
     [JwtAuthorize]
     [HttpGet]
     [ProducesResponseType(typeof(List<CategoryDto>), StatusCodes.Status200OK)]

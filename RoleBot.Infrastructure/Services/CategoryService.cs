@@ -1,5 +1,4 @@
-using RoleBot.Infrastructure.Entities;
-using RoleBot.Infrastructure.Models;
+using RoleBot.Infrastructure.Dtos;
 using RoleBot.Infrastructure.Repositories.Interfaces;
 using RoleBot.Infrastructure.Services.Interfaces;
 
@@ -14,18 +13,11 @@ internal class CategoryService: ICategoryService
         _repository = repository;
     }
 
-    public async Task<Category?> GetCategory(long categoryId)
-    {
-        return await _repository.GetCategoryById(categoryId);
-    }
+    public Task<CategoryDto?> GetCategory(long categoryId) =>_repository.GetCategoryById(categoryId);
+    public Task<CategoryDto> CreateCategory(CategoryDto category) => _repository.CreateCategory(category);
+    public Task<List<CategoryDto>> GetGuildCategories(string guildId) =>  _repository.GetCategories(guildId);
+    public Task<CategoryDto?> UpdateCategory(CategoryDto category) => _repository.UpdateCategory(category);
 
-    public async Task<List<Category>> GetGuildCategories(string guildId)
-    {
-        return await _repository.GetCategories(guildId);
-    }
-
-    public async Task<CategoryDto?> UpdateCategory(CategoryDto category)
-    {
-        return await _repository.UpdateCategory(category);
-    }
+    public Task<CategoryDto?> DeleteCategory(string guildId, long categoryId) =>
+        _repository.DeleteCategory(guildId, categoryId);
 }
