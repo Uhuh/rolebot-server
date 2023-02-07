@@ -33,6 +33,17 @@ public class RoleBotDbContext : DbContext
       .HasPostgresEnum<DisplayOrder>();
 
     modelBuilder.Entity<Category>().ToTable("category");
+    modelBuilder.Entity<ReactRole>().ToTable("react_role");
+    
+    modelBuilder.Entity<GuildInfo>().ToTable("guild_info")
+      .HasMany<GuildEmoji>(g => g.GuildEmojis);
+    modelBuilder.Entity<GuildInfo>().ToTable("guild_info")
+      .HasMany<GuildRole>(g => g.GuildRoles);
+    modelBuilder.Entity<GuildEmoji>().ToTable("guild_emoji")
+      .HasOne<GuildInfo>(e => e.GuildInfo);
+    modelBuilder.Entity<GuildRole>().ToTable("guild_role")
+      .HasOne<GuildInfo>(e => e.GuildInfo);
+
     modelBuilder.Entity<GuildConfig>().ToTable("guild_config")
       .HasKey(g => new { g.GuildId });
   }
