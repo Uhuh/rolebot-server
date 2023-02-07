@@ -69,7 +69,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddRefitClient<IDiscordApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://discordapp.com/api"));
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://discord.com/api"));
 
 builder.Services.SetupInfrastructureServices();
 builder.Services.SetupJwt(builder.Configuration);
@@ -87,8 +87,6 @@ app.UseMiddleware<JwtMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseCors("_myAllowSpecificOrigins");
-
-
 
 app.UseAuthorization();
 app.MapControllers();

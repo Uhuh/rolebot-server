@@ -16,4 +16,7 @@ public interface IDiscordApi
 
     [Get("/users/@me/guilds")]
     Task<string> GetUserGuilds([Authorize] string authorization);
+
+    [Get("/guilds/{guildId}")]
+    Task<string> GetGuildInfo([Authorize("Bot")] string token, string guildId);
 }

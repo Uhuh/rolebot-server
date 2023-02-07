@@ -10,9 +10,14 @@ namespace RoleBot.API.Controllers;
 public class GuildController : ControllerBase
 {
     private readonly IConfigService _service;
-    public GuildController(IConfigService service)
+    private readonly IDiscordApi _api;
+    private readonly string _token;
+
+    public GuildController(IConfigService service, IDiscordApi api, IConfiguration configuration)
     {
         _service = service;
+        _api = api;
+        _token = configuration["BotToken"];
     }
 
     [JwtAuthorize]
@@ -46,4 +51,16 @@ public class GuildController : ControllerBase
         
         return Ok(result);
     }
+
+    [JwtAuthorize]
+    [HttpGet(nameof(GetGuildInfo))]
+    [ProducesResponseType(typeof(ConfigDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetGuildInfo(string guildId)
+    {
+        var result = await _api.GetGuildInfo(_token, guildId);
+
+        return Ok(result);
+    }
+    
 }
