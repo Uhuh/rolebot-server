@@ -181,14 +181,18 @@ namespace RoleBot.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("Permissions")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<long>("Permissions")
+                        .HasColumnType("bigint")
                         .HasColumnName("permissions");
 
                     b.Property<long>("Position")
                         .HasColumnType("bigint")
                         .HasColumnName("position");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("roleId");
 
                     b.HasKey("Id");
 
