@@ -8,6 +8,8 @@ public class GuildRole : IEntity
     public long Id { get; set; }
     [Column("guildId")]
     public string GuildId { get; set; }
+    [Column("roleId")]
+    public string RoleId { get; set; }
     [Column("name")]
     public string Name { get; set; }
     [Column("color")]
@@ -15,7 +17,7 @@ public class GuildRole : IEntity
     [Column("position")]
     public long Position { get; set; }
     [Column("permissions")]
-    public string Permissions { get; set; }
+    public long Permissions { get; set; }
     
     public GuildInfo GuildInfo { get; }
 }

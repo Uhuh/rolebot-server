@@ -12,6 +12,8 @@ public class GuildEmoji : IEntity
     public string EmojiId { get; set; }
     [Column("name")]
     public string Name { get; set; }
+    [Column("animated")]
+    public bool Animated { get; set; }
     
     public GuildInfo GuildInfo { get; }
 }
