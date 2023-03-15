@@ -43,7 +43,6 @@ public class CategoryRepository : ICategoryRepository
             RequiredRoleId = category.RequiredRoleId,
         };
 
-
         await _context.Set<Category>().AddAsync(newCategory);
 
         await _context.SaveChangesAsync();
