@@ -14,10 +14,12 @@ public class JwtService : IJwtService
     private const string RefreshCookieName = "JwtRefreshCookie";
 
     private readonly JwtConfig _jwtConfig;
-    
-    public JwtService(JwtConfig jwtConfig)
+    private readonly ILogger<JwtService> _logger;
+
+    public JwtService(JwtConfig jwtConfig, ILogger<JwtService> logger)
     {
         _jwtConfig = jwtConfig;
+        _logger = logger;
     }
     
     public string? GenerateAuthToken(string accessTokenJson, string userJsonString, string userGuildJsonString)
@@ -56,18 +58,20 @@ public class JwtService : IJwtService
         try
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            
+
             tokenHandler.ValidateToken(token, _jwtConfig.TokenValidationParameters, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
-            
+
             var guildsString = jwtToken.Claims.First(x => x.Type == "guilds").Value;
             var guilds = JsonConvert.DeserializeObject<List<Guild>>(guildsString);
 
             var guildId = context.Request.Query["guildId"];
             var guild = guilds?.Find(g => g.id == guildId);
-            
+
             context.Items["Guild"] = guild;
+
+            _logger.LogInformation("Verified user.");
         }
         catch {}
     }
