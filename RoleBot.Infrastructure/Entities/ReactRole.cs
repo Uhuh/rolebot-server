@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using RoleBot.Infrastructure.Enums;
 
 namespace RoleBot.Infrastructure.Entities;
 
@@ -13,8 +14,11 @@ public class ReactRole : IEntity
     [Column("name")]
     public string Name { get; set; }
     
+    [Column("description")]
+    public string? Description { get; set; }
+    
     [Required]
-    [Column("guildId")]
+    [Column("roleId")]
     public string RoleId { get; set; }
     
     [Required]
@@ -32,7 +36,10 @@ public class ReactRole : IEntity
     public long? CategoryId { get; set; }
     
     [Column("categoryAddDate")]
-    public DateTime CategoryAddDate { get; set; }
+    public DateTime? CategoryAddDate { get; set; }
+    
+    [Column("type")]
+    public ReactRoleType Type { get; set; }
     
     [JsonIgnore]
     public Category? Category { get; set; }
