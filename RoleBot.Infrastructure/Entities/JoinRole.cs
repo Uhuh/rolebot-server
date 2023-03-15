@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Amazon.DynamoDBv2.DataModel;
 
 namespace RoleBot.Infrastructure.Entities;
 
