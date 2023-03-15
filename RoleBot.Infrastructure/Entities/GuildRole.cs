@@ -17,7 +17,7 @@ public class GuildRole : IEntity
     [Column("position")]
     public long Position { get; set; }
     [Column("permissions")]
-    public long Permissions { get; set; }
+    public string Permissions { get; set; }
     
     public GuildInfo GuildInfo { get; }
 }
