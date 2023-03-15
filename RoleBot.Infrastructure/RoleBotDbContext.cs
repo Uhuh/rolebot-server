@@ -8,10 +8,12 @@ namespace RoleBot.Infrastructure;
 public class RoleBotDbContext : DbContext
 {
   private readonly IConfiguration _config;
-  
-  public RoleBotDbContext(IConfiguration config, DbContextOptions<RoleBotDbContext> options) : base(options)
+  private readonly ILogger<RoleBotDbContext> _logger;
+
+  public RoleBotDbContext(IConfiguration config, DbContextOptions<RoleBotDbContext> options, ILogger<RoleBotDbContext> logger) : base(options)
   {
     _config = config;
+    _logger = logger;
   }
   
   static RoleBotDbContext() {
@@ -22,8 +24,15 @@ public class RoleBotDbContext : DbContext
   
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
-    optionsBuilder.UseNpgsql("Host=192.168.50.36;Database=rolebot_test;Username=panku;Password=panku");
+    var connectionInfo = _config.GetSection("PsqlInfo");
+    var host = connectionInfo["Host"];
+    var user = connectionInfo["User"];
+    var password = connectionInfo["Password"];
+    var db = connectionInfo["Db"];
+    
+    optionsBuilder.UseNpgsql($"Host={host};Database={db};Username={user};Password={password}");
   }
+  
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);

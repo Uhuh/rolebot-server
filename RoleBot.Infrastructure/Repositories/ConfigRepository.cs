@@ -27,10 +27,20 @@ public class ConfigRepository : IConfigRepository
             .FirstOrDefaultAsync();
 
         if (config == null)
-            return null;
-
-        config.ReactType = updatedConfig.ReactType;
-        config.HideEmojis = updatedConfig.HideEmojis;
+        {
+            config = new GuildConfig
+            {
+                GuildId = updatedConfig.GuildId,
+                HideEmojis = updatedConfig.HideEmojis,
+                ReactType = updatedConfig.ReactType
+            };
+            await _context.Set<GuildConfig>().AddAsync(config);
+        }
+        else
+        {
+            config.ReactType = updatedConfig.ReactType;
+            config.HideEmojis = updatedConfig.HideEmojis;
+        }
 
         await _context.SaveChangesAsync();
 

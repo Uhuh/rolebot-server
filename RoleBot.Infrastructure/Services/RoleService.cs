@@ -16,4 +16,17 @@ internal class RoleService : IRoleService
     {
         return _repository.GetGuildRoles(guildId);
     }
+
+    public Task<ReactRoleDto> CreateReactRole(ReactRoleDto reactRole, string guildId)
+    {
+        return _repository.CreateReactRole(reactRole, guildId);
+    }
+    public Task<List<JoinRoleDto>> GetGuildJoinRoles(string guildId)
+    {
+        return _repository.GetGuildJoinRoles(guildId);
+    }
+    public Task<JoinRoleDto> CreateJoinRole(JoinRoleDto joinRole, string guildId)
+    {
+        return _repository.CreateJoinRole(joinRole, guildId);
+    }
 }

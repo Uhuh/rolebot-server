@@ -1,0 +1,10 @@
+{
+  "profile" : "default",
+  "region" : "us-east-2",
+  "configuration" : "Release",
+  "function-runtime" : "dotnet6",
+  "function-memory-size" : 256,
+  "function-timeout" : 30,
+  "function-handler" : "RoleBot.API",
+  "function-name": "rolebot-web-api"
+}

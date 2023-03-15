@@ -4,13 +4,13 @@
 
 namespace RoleBot.Infrastructure.Migrations
 {
-    public partial class Add_RoleId_GuildRole : Migration
+    public partial class ReactRole_RoleId_ColumnNameFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
                 name: "roleId",
-                table: "guild_role",
+                table: "react_role",
                 type: "text",
                 nullable: false,
                 defaultValue: "");
@@ -20,7 +20,7 @@ namespace RoleBot.Infrastructure.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "roleId",
-                table: "guild_role");
+                table: "react_role");
         }
     }
 }

@@ -73,6 +73,8 @@ builder.Services.AddRefitClient<IDiscordApi>()
 
 builder.Services.SetupInfrastructureServices();
 builder.Services.SetupJwt(builder.Configuration);
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+builder.Services.AddLogging();
 
 var app = builder.Build();
 

@@ -8,7 +8,7 @@ public record GuildRoleDto(
     string Name,
     long Color,
     long Position,
-    long Permissions
+    string Permissions
 )
 {
     public static GuildRoleDto From(GuildRole role) =>

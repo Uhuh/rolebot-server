@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RoleBot.Infrastructure;
@@ -12,9 +13,10 @@ using RoleBot.Infrastructure.Enums;
 namespace RoleBot.Infrastructure.Migrations
 {
     [DbContext(typeof(RoleBotDbContext))]
-    partial class RoleBotDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230312015807_ReactRole_Add_Type")]
+    partial class ReactRole_Add_Type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,7 +219,7 @@ namespace RoleBot.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("CategoryAddDate")
+                    b.Property<DateTime>("CategoryAddDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("categoryAddDate");
 
