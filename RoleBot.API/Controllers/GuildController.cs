@@ -54,13 +54,20 @@ public class GuildController : ControllerBase
 
     [JwtAuthorize]
     [HttpGet(nameof(GetGuildInfo))]
-    [ProducesResponseType(typeof(ConfigDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetGuildInfo(string guildId)
     {
-        var result = await _api.GetGuildInfo(_token, guildId);
+        try
+        {
+            var result = await _api.GetGuildInfo(_token, guildId);
 
-        return Ok(result);
+            return Ok(result);
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
     
 }
