@@ -8,10 +8,12 @@ namespace RoleBot.Infrastructure.Repositories;
 public class CategoryRepository : ICategoryRepository
 {
     private readonly RoleBotDbContext _context;
+    private readonly ILogger<CategoryRepository> _logger;
 
-    public CategoryRepository(RoleBotDbContext context)
+    public CategoryRepository(RoleBotDbContext context, ILogger<CategoryRepository> logger)
     {
-        this._context = context;
+        _context = context;
+        _logger = logger;
     }
 
     public Task<List<CategoryDto>> GetCategories(string guildId)
@@ -47,6 +49,8 @@ public class CategoryRepository : ICategoryRepository
 
         await _context.SaveChangesAsync();
 
+        _logger.Log(LogLevel.Debug, $"Created new category {newCategory.Id} for guild {category.GuildId}");
+        
         return CategoryDto.From(newCategory);
     }
 
@@ -73,7 +77,10 @@ public class CategoryRepository : ICategoryRepository
         var result = await _context.Set<Category>().Where(c => c.Id == categoryId && c.GuildId == guildId).FirstOrDefaultAsync();
 
         if (result == null)
+        {
+            _logger.Log(LogLevel.Information, $"Tried deleting category {categoryId} that doesn't exist for guild {guildId}");
             return null;
+        }
 
         _context.Remove(result);
         await _context.SaveChangesAsync();

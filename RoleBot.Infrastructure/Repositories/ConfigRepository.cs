@@ -8,10 +8,12 @@ namespace RoleBot.Infrastructure.Repositories;
 public class ConfigRepository : IConfigRepository
 {
     private readonly RoleBotDbContext _context;
+    private readonly ILogger<ConfigRepository> _logger;
 
-    public ConfigRepository(RoleBotDbContext context)
+    public ConfigRepository(RoleBotDbContext context, ILogger<ConfigRepository> logger)
     {
         _context = context;
+        _logger = logger;
     }
     
     public async Task<ConfigDto?> GetConfig(string guildId)
@@ -28,6 +30,7 @@ public class ConfigRepository : IConfigRepository
 
         if (config == null)
         {
+            _logger.Log(LogLevel.Information, $"Guild {updatedConfig.GuildId} has no config. Creating new one");
             config = new GuildConfig
             {
                 GuildId = updatedConfig.GuildId,
@@ -38,6 +41,7 @@ public class ConfigRepository : IConfigRepository
         }
         else
         {
+            _logger.Log(LogLevel.Information, $"Updating config for guild {updatedConfig.GuildId}");
             config.ReactType = updatedConfig.ReactType;
             config.HideEmojis = updatedConfig.HideEmojis;
         }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Rolebot.API.Dtos;
 using RoleBot.API.Middleware;
