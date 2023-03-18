@@ -6,6 +6,7 @@ using RoleBot.Infrastructure.Services.Interfaces;
 namespace RoleBot.API.Controllers;
 
 [Route("/api/[controller]/[action]")]
+[ApiController]
 public class RoleController : ControllerBase
 {
     private readonly IRoleService _roleService;
