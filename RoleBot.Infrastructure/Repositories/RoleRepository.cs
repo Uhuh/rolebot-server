@@ -9,10 +9,12 @@ namespace RoleBot.Infrastructure.Repositories;
 public class RoleRepository : IRoleRepository
 {
     private readonly RoleBotDbContext _context;
+    private readonly ILogger<RoleRepository> _logger;
 
-    public RoleRepository(RoleBotDbContext context)
+    public RoleRepository(RoleBotDbContext context, ILogger<RoleRepository> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public Task<List<ReactRoleDto>> GetGuildRoles(string guildId)
@@ -40,6 +42,8 @@ public class RoleRepository : IRoleRepository
         await _context.Set<ReactRole>().AddAsync(newReactRole);
 
         await _context.SaveChangesAsync();
+        
+        _logger.Log(LogLevel.Information, $"Created new reactRole for guild {guildId}");
 
         return ReactRoleDto.From(newReactRole);
     }
