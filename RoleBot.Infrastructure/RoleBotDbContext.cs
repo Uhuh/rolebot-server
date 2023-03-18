@@ -30,7 +30,7 @@ public class RoleBotDbContext : DbContext
     var password = connectionInfo["Password"];
     var db = connectionInfo["Db"];
     
-    optionsBuilder.UseNpgsql($"Host={host};Database={db};Username={user};Password={password}");
+    optionsBuilder.UseNpgsql($"Host={host};Database={db};Username={user};Password={password};Include Error Detail=true");
   }
   
   protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,7 +53,6 @@ public class RoleBotDbContext : DbContext
     modelBuilder.Entity<GuildRole>().ToTable("guild_role")
       .HasOne<GuildInfo>(e => e.GuildInfo);
 
-    modelBuilder.Entity<GuildConfig>().ToTable("guild_config")
-      .HasKey(g => new { g.GuildId });
+    modelBuilder.Entity<GuildConfig>().ToTable("guild_config");
   }
 }
