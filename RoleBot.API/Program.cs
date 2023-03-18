@@ -62,9 +62,9 @@ builder.Services.AddSingleton(new AuthData(
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "_myAllowSpecificOrigins", builder =>
+    options.AddPolicy(name: "_myAllowSpecificOrigins", policy =>
     {
-        builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+        policy.WithOrigins(builder.Configuration["Origins"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
     });
 });
 
